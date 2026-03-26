@@ -1,34 +1,36 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Lora } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/ui/Header';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const lora = Lora({ subsets: ['latin'], variable: '--font-lora' });
 
 export const metadata: Metadata = {
   title: {
-    default: 'DataStories — Interactive Data Storytelling',
-    template: '%s | DataStories',
+    default: 'Urban Greening — Data Stories',
+    template: '%s | Urban Greening',
   },
-  description: 'Explore data-driven stories with interactive charts, maps, and visualizations.',
+  description: 'Data-driven stories about urbanization, greening, and the future of cities.',
   openGraph: {
     type: 'website',
-    siteName: 'DataStories',
+    siteName: 'Urban Greening Data Stories',
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-white antialiased">
+    <html lang="en" className={`${inter.variable} ${lora.variable}`}>
+      <body className="min-h-screen antialiased" style={{ background: 'var(--bg-page)', color: 'var(--text-primary)' }}>
         <Header />
         <main id="main-content">{children}</main>
-        <footer className="mt-24 border-t border-gray-100 dark:border-gray-800 py-8">
-          <div className="max-w-7xl mx-auto px-4 text-center text-sm text-gray-400 dark:text-gray-600">
-            DataStories — A data storytelling platform
+        <footer className="mt-24 py-10 border-t" style={{ borderColor: 'var(--green-mint)' }}>
+          <div className="max-w-7xl mx-auto px-4 text-center text-sm" style={{ color: 'var(--text-muted)' }}>
+            🌿 Urban Greening — Data Storytelling Platform
           </div>
         </footer>
       </body>
     </html>
   );
 }
+

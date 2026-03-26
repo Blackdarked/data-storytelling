@@ -1,81 +1,201 @@
 import { client } from '@/lib/sanity';
-import { allStoriesQuery, allTagsQuery } from '@/lib/queries';
-import { StoryCard } from '@/components/ui/StoryCard';
+import { allStoriesFullQuery } from '@/lib/queries';
+import { TextBlock } from '@/components/blocks/TextBlock';
+import { ChartBlock } from '@/components/blocks/ChartBlock';
+import { CalloutBlock } from '@/components/blocks/CalloutBlock';
+import { TableBlock } from '@/components/blocks/TableBlock';
+import { StoryNav } from '@/components/ui/StoryNav';
 
 export const revalidate = 60;
 
-export default async function HomePage({
-  searchParams,
-}: {
-  searchParams: Promise<{ tag?: string }>;
-}) {
-  const { tag } = await searchParams;
-  const [stories, tags] = await Promise.all([
-    client.fetch(allStoriesQuery),
-    client.fetch(allTagsQuery),
-  ]);
+interface Section {
+  _type: string;
+  _key: string;
+  [key: string]: unknown;
+}
 
-  const filtered = tag ? stories.filter((s: { tags?: string[] }) => s.tags?.includes(tag)) : stories;
+interface Story {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  publishedAt?: string;
+  summary?: string;
+  tags?: string[];
+  coverImage?: { asset?: { url?: string } };
+  sections?: Section[];
+}
+
+function renderSection(section: Section) {
+  switch (section._type) {
+    case 'textBlock':
+      return <TextBlock key={section._key} content={section.content as import('@portabletext/types').PortableTextBlock[]} />;
+    case 'chartBlock':
+      return (
+        <ChartBlock
+          key={section._key}
+          chartType={section.chartType as 'bar' | 'line' | 'area' | 'scatter' | 'pie'}
+          title={section.title as string}
+          caption={section.caption as string}
+          dataSource={section.dataSource as { inline?: string; url?: string }}
+          xField={section.xField as string}
+          yField={section.yField as string}
+          colorField={section.colorField as string | undefined}
+        />
+      );
+    case 'calloutBlock':
+      return (
+        <CalloutBlock
+          key={section._key}
+          value={section.value as string}
+          label={section.label as string}
+          description={section.description as string}
+          variant={section.variant as 'stat' | 'quote' | 'highlight'}
+        />
+      );
+    case 'tableBlock':
+      return (
+        <TableBlock
+          key={section._key}
+          title={section.title as string}
+          caption={section.caption as string}
+          headers={section.headers as string[]}
+          tableData={section.tableData as string}
+        />
+      );
+    default:
+      return null;
+  }
+}
+
+export default async function HomePage() {
+  const stories: Story[] = await client.fetch(allStoriesFullQuery);
+
+  const navItems = stories.map((s) => ({ title: s.title, slug: s.slug.current }));
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Hero */}
-      <div className="text-center mb-16">
-        <h1 className="text-5xl sm:text-6xl font-black text-gray-900 dark:text-white mb-4 tracking-tight">
-          Data{' '}
-          <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Stories
-          </span>
+
+      {/* ── Hero ── */}
+      <div className="text-center mb-20">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium mb-6"
+          style={{ background: 'var(--green-mint)', color: 'var(--green-forest)' }}>
+          🌱 Urbanization &amp; Greening · Data Storytelling
+        </div>
+        <h1 className="text-5xl sm:text-7xl font-black mb-6 leading-tight"
+          style={{ fontFamily: 'var(--font-lora, Lora, serif)', color: 'var(--green-deep)' }}>
+          Cities in Bloom
         </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Interactive narratives powered by real data. Charts, maps, and insights — all in one place.
+        <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+          How urban greening is reshaping the future of cities — one data story at a time.
         </p>
+        <div className="flex justify-center gap-4 mt-10">
+          <a href="#stories"
+            className="px-6 py-3 rounded-full text-white font-semibold transition-all hover:opacity-90 shadow-lg"
+            style={{ background: 'var(--green-forest)' }}>
+            Read the Stories ↓
+          </a>
+          <a href="/studio"
+            className="px-6 py-3 rounded-full font-semibold transition-all border"
+            style={{ color: 'var(--green-forest)', borderColor: 'var(--green-sage)' }}>
+            Open Studio
+          </a>
+        </div>
       </div>
 
-      {/* Tag filter */}
-      {tags && tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-10 justify-center">
-          <a
-            href="/"
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              !tag ? 'bg-indigo-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
-            }`}
-          >
-            All
-          </a>
-          {tags.map((t: string) => (
-            <a
-              key={t}
-              href={`/?tag=${encodeURIComponent(t)}`}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                tag === t ? 'bg-indigo-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
-              }`}
-            >
-              {t}
-            </a>
-          ))}
-        </div>
-      )}
+      {/* ── Decorative divider ── */}
+      <div className="story-divider" style={{ color: 'var(--green-sage)' }}>
+        <span className="text-lg">🌿</span>
+      </div>
 
-      {/* Stories grid */}
-      {filtered.length === 0 ? (
-        <div className="text-center py-24 text-gray-400">
-          <p className="text-xl mb-2">No stories yet.</p>
-          <p className="text-sm">Publish one in <a href="/studio" className="text-indigo-500 hover:underline">Sanity Studio</a>.</p>
+      {stories.length === 0 ? (
+        /* ── Empty state ── */
+        <div id="stories" className="text-center py-24 rounded-3xl border-2 border-dashed"
+          style={{ borderColor: 'var(--green-mint)', color: 'var(--text-muted)' }}>
+          <div className="text-5xl mb-4">🌱</div>
+          <p className="text-xl font-semibold mb-2" style={{ color: 'var(--green-forest)' }}>No stories yet.</p>
+          <p className="text-sm">Publish your first story in{' '}
+            <a href="/studio" className="underline" style={{ color: 'var(--green-leaf)' }}>Sanity Studio</a>.
+          </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filtered.map((story: { _id: string; slug: { current: string }; title: string; publishedAt: string; summary: string; tags: string[]; coverImage: unknown }) => (
-            <StoryCard
-              key={story._id}
-              slug={story.slug.current}
-              title={story.title}
-              publishedAt={story.publishedAt}
-              summary={story.summary}
-              tags={story.tags}
-              coverImage={story.coverImage as { asset?: { url?: string } }}
-            />
-          ))}
+        /* ── Single-page stories layout ── */
+        <div id="stories" className="flex gap-12 items-start">
+
+          {/* Sticky sidebar nav */}
+          <aside className="w-52 shrink-0">
+            <StoryNav stories={navItems} />
+          </aside>
+
+          {/* Story sections stacked vertically */}
+          <div className="flex-1 min-w-0 space-y-0">
+            {stories.map((story, idx) => {
+              const date = story.publishedAt
+                ? new Date(story.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+                : null;
+
+              return (
+                <section
+                  key={story._id}
+                  id={story.slug.current}
+                  className="scroll-mt-24"
+                >
+                  {/* Story header */}
+                  <div className="mb-10">
+                    {story.tags && story.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {story.tags.map((tag) => (
+                          <span key={tag}
+                            className="text-xs px-3 py-1 rounded-full font-medium"
+                            style={{ background: 'var(--green-mint)', color: 'var(--green-forest)' }}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    <h2 className="text-3xl sm:text-4xl font-bold mb-3 leading-tight"
+                      style={{ fontFamily: 'var(--font-lora, Lora, serif)', color: 'var(--green-deep)' }}>
+                      {story.title}
+                    </h2>
+
+                    {story.summary && (
+                      <p className="text-lg leading-relaxed max-w-3xl" style={{ color: 'var(--text-secondary)' }}>
+                        {story.summary}
+                      </p>
+                    )}
+
+                    {date && (
+                      <time className="text-xs mt-3 block" style={{ color: 'var(--text-muted)' }}>{date}</time>
+                    )}
+                  </div>
+
+                  {/* Cover image */}
+                  {story.coverImage?.asset?.url && (
+                    <div className="mb-10 rounded-2xl overflow-hidden aspect-[21/9]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={story.coverImage.asset.url}
+                        alt={story.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+
+                  {/* Story content blocks */}
+                  <div className="space-y-8">
+                    {story.sections?.map((section) => renderSection(section))}
+                  </div>
+
+                  {/* Divider between stories (not after the last) */}
+                  {idx < stories.length - 1 && (
+                    <div className="story-divider mt-16">
+                      <span className="text-base">🌿</span>
+                    </div>
+                  )}
+                </section>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>

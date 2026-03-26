@@ -1,30 +1,78 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* ── Nature Green Palette ── */
 :root {
-  --background: #f9fafb;
-  --foreground: #111827;
+  /* Core greens */
+  --green-forest:   #2d6a4f;
+  --green-leaf:     #52b788;
+  --green-sage:     #95d5b2;
+  --green-mint:     #d8f3dc;
+  --green-deep:     #1b4332;
+
+  /* Backgrounds */
+  --bg-page:        #f7faf5;
+  --bg-surface:     #ffffff;
+  --bg-surface-alt: #f0f7f2;
+
+  /* Text */
+  --text-primary:   #1b2e22;
+  --text-secondary: #4a6355;
+  --text-muted:     #7a9b87;
+
+  /* Accents */
+  --accent-earth:   #8b7355;
+  --accent-sky:     #74b9c8;
+  --accent-warm:    #f5f0e8;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #030712;
-    --foreground: #f3f4f6;
+    --bg-page:        #0d1f13;
+    --bg-surface:     #122018;
+    --bg-surface-alt: #1a2e20;
+    --text-primary:   #e8f5ec;
+    --text-secondary: #a8d5b5;
+    --text-muted:     #5a8a6a;
   }
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background:   var(--bg-page);
+  --color-foreground:   var(--text-primary);
   --font-sans: var(--font-inter, 'Inter', system-ui, sans-serif);
+  --font-serif: var(--font-lora, 'Lora', Georgia, serif);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg-page);
+  color: var(--text-primary);
   font-family: var(--font-inter, 'Inter', system-ui, sans-serif);
 }
 
-html {
-  scroll-behavior: smooth;
+html { scroll-behavior: smooth; }
+
+/* Story section divider */
+.story-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 4rem 0;
+  color: var(--green-sage);
 }
+.story-divider::before,
+.story-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--green-sage), transparent);
+}
+
+/* Prose green overrides */
+.prose a { color: var(--green-forest); }
+.prose blockquote { border-left-color: var(--green-leaf); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-surface-alt); }
+::-webkit-scrollbar-thumb { background: var(--green-sage); border-radius: 3px; }
