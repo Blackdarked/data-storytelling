@@ -43,6 +43,12 @@ export const story = defineType({
       options: { hotspot: true },
     },
     {
+      name: 'backgroundVideoUrl',
+      title: 'Background Video URL',
+      type: 'url',
+      description: 'Optional direct link to an MP4 video to loop instead of the cover image.',
+    },
+    {
       name: 'tags',
       title: 'Tags',
       type: 'array',

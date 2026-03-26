@@ -22,6 +22,7 @@ interface Story {
   summary?: string;
   tags?: string[];
   coverImage?: { asset?: { url?: string } };
+  backgroundVideoUrl?: string;
   sections?: Section[];
 }
 
@@ -118,9 +119,15 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
         {date && <time className="text-sm text-gray-400 dark:text-gray-500">{date}</time>}
       </header>
 
-      {/* Cover image */}
-      {story.coverImage?.asset?.url && (
-        <div className="mb-12 rounded-2xl overflow-hidden aspect-[16/9] relative">
+      {/* Cover image or Background Video */}
+      {story.backgroundVideoUrl ? (
+        <div className="mb-12 rounded-3xl overflow-hidden aspect-[16/9] relative shadow-2xl border border-gray-100 dark:border-gray-800">
+          <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+            <source src={story.backgroundVideoUrl} type="video/mp4" />
+          </video>
+        </div>
+      ) : story.coverImage?.asset?.url ? (
+        <div className="mb-12 rounded-3xl overflow-hidden aspect-[16/9] relative shadow-xl">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={story.coverImage.asset.url}
@@ -128,7 +135,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
             className="w-full h-full object-cover"
           />
         </div>
-      )}
+      ) : null}
 
       {/* Sections */}
       <div className="space-y-8">

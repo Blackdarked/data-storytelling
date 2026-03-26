@@ -22,6 +22,7 @@ interface Story {
   summary?: string;
   tags?: string[];
   coverImage?: { asset?: { url?: string } };
+  backgroundVideoUrl?: string;
   sections?: Section[];
 }
 
@@ -75,30 +76,40 @@ export default async function HomePage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-      {/* ── Hero ── */}
-      <div className="text-center mb-20">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium mb-6"
-          style={{ background: 'var(--green-mint)', color: 'var(--green-forest)' }}>
-          🌱 Urbanization &amp; Greening · Data Storytelling
-        </div>
-        <h1 className="text-5xl sm:text-7xl font-black mb-6 leading-tight"
-          style={{ fontFamily: 'var(--font-lora, Lora, serif)', color: 'var(--green-deep)' }}>
-          Cities in Bloom
-        </h1>
-        <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-          How urban greening is reshaping the future of cities — one data story at a time.
-        </p>
-        <div className="flex justify-center gap-4 mt-10">
-          <a href="#stories"
-            className="px-6 py-3 rounded-full text-white font-semibold transition-all hover:opacity-90 shadow-lg"
-            style={{ background: 'var(--green-forest)' }}>
-            Read the Stories ↓
-          </a>
-          <a href="/studio"
-            className="px-6 py-3 rounded-full font-semibold transition-all border"
-            style={{ color: 'var(--green-forest)', borderColor: 'var(--green-sage)' }}>
-            Open Studio
-          </a>
+      {/* ── Immersive Hero with Background Video ── */}
+      <div className="relative rounded-3xl overflow-hidden mb-20 py-24 px-6 text-center shadow-2xl">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-90"
+          style={{ filter: 'brightness(0.6)' }}
+        >
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4" type="video/mp4" />
+        </video>
+        
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium mb-6 bg-white/20 backdrop-blur-md text-white border border-white/30 shadow-sm">
+            🌱 Urbanization &amp; Greening · Data Storytelling
+          </div>
+          <h1 className="text-5xl sm:text-7xl font-black mb-6 leading-tight text-white drop-shadow-lg"
+            style={{ fontFamily: 'var(--font-lora, Lora, serif)' }}>
+            Cities in Bloom
+          </h1>
+          <p className="text-xl max-w-2xl mx-auto leading-relaxed text-gray-100 drop-shadow-md font-medium">
+            How urban greening is reshaping the future of cities — one data story at a time.
+          </p>
+          <div className="flex justify-center gap-4 mt-10">
+            <a href="#stories"
+              className="px-6 py-3 rounded-full text-white font-semibold transition-all hover:scale-105 shadow-xl bg-green-600/90 hover:bg-green-500 backdrop-blur-sm border border-green-400">
+              Read the Stories ↓
+            </a>
+            <a href="/studio"
+              className="px-6 py-3 rounded-full font-semibold transition-all shadow-xl bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm border border-white/50">
+              Open Studio
+            </a>
+          </div>
         </div>
       </div>
 
@@ -169,9 +180,16 @@ export default async function HomePage() {
                     )}
                   </div>
 
-                  {/* Cover image */}
-                  {story.coverImage?.asset?.url && (
-                    <div className="mb-10 rounded-2xl overflow-hidden aspect-[21/9]">
+                  {/* Cover image or Video */}
+                  {story.backgroundVideoUrl ? (
+                    <div className="mb-10 rounded-2xl overflow-hidden aspect-[21/9] relative shadow-lg">
+                      <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+                        <source src={story.backgroundVideoUrl} type="video/mp4" />
+                      </video>
+                      <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 text-xs rounded-full backdrop-blur-sm">Video</div>
+                    </div>
+                  ) : story.coverImage?.asset?.url ? (
+                    <div className="mb-10 rounded-2xl overflow-hidden aspect-[21/9] shadow-md">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={story.coverImage.asset.url}
@@ -179,7 +197,7 @@ export default async function HomePage() {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                  )}
+                  ) : null}
 
                   {/* Story content blocks */}
                   <div className="space-y-8">

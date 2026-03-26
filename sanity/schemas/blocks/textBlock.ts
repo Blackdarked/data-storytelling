@@ -34,7 +34,24 @@ export const textBlock = defineType({
             ],
           },
         },
-        { type: 'image', options: { hotspot: true } },
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative Text',
+              description: 'Important for SEO and accessiblity.',
+            },
+            {
+              name: 'caption',
+              type: 'string',
+              title: 'Caption',
+              description: 'Displayed below the image.',
+            },
+          ],
+        },
       ],
     },
   ],

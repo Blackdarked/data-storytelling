@@ -11,13 +11,20 @@ const components = {
         return null;
       }
       return (
-        /* eslint-disable-next-line @next/next/no-img-element */
-        <img
-          alt={value.alt || ' '}
-          loading="lazy"
-          src={urlFor(value).width(800).fit('max').auto('format').url()}
-          className="rounded-xl my-8 w-full shadow-lg object-cover"
-        />
+        <figure className="my-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            alt={value.alt || ' '}
+            loading="lazy"
+            src={urlFor(value).width(800).fit('max').auto('format').url()}
+            className="rounded-xl w-full shadow-lg object-cover"
+          />
+          {value.caption && (
+            <figcaption className="text-center text-sm mt-3 italic" style={{ color: 'var(--text-muted)' }}>
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
       );
     },
   },

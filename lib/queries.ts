@@ -8,7 +8,8 @@ export const allStoriesQuery = `
     tags,
     coverImage {
       asset-> { url }
-    }
+    },
+    backgroundVideoUrl
   }
 `;
 
@@ -23,6 +24,7 @@ export const allStoriesFullQuery = `
     coverImage {
       asset-> { url }
     },
+    backgroundVideoUrl,
     sections[] {
       _type,
       _key,
@@ -58,6 +60,7 @@ export const storyBySlugQuery = `
     coverImage {
       asset-> { url }
     },
+    backgroundVideoUrl,
     sections[] {
       _type,
       _key,
