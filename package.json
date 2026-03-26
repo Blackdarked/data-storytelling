@@ -1,5 +1,5 @@
 {
-  "name": "scaffold",
+  "name": "data-storytelling",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,9 +9,19 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@observablehq/plot": "^0.6.17",
+    "@portabletext/react": "^6.0.3",
+    "@sanity/client": "^7.20.0",
+    "@sanity/vision": "^5.18.0",
+    "@tailwindcss/typography": "^0.5.19",
+    "d3": "^7.9.0",
     "next": "16.2.1",
+    "next-sanity": "^12.1.6",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-simple-maps": "^3.0.0",
+    "sanity": "^5.18.0",
+    "styled-components": "^6.3.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
