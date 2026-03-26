@@ -42,8 +42,8 @@ export function ImageRowBlock({ images, columns = 2, gap = 'md' }: ImageRowBlock
             )}
           </div>
           {img.caption && (
-            <figcaption className="p-4 text-center text-xs italic text-white/50 border-t border-white/5 bg-black/40 backdrop-blur-sm">
-              [ {img.caption} ]
+            <figcaption className="p-4 text-center text-xs italic text-gray-500 border-t border-gray-100 bg-gray-50">
+              {img.caption}
             </figcaption>
           )}
         </figure>
