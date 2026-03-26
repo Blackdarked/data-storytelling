@@ -4,6 +4,8 @@ import { chartBlock } from './blocks/chartBlock';
 import { calloutBlock } from './blocks/calloutBlock';
 import { tableBlock } from './blocks/tableBlock';
 import { mapBlock } from './blocks/mapBlock';
+import { imageRowBlock } from './blocks/imageRowBlock';
+import { htmlBlock } from './blocks/htmlBlock';
 
 export const story = defineType({
   name: 'story',
@@ -65,6 +67,8 @@ export const story = defineType({
         { type: 'calloutBlock', name: 'calloutBlock', title: 'Callout / Stat' },
         { type: 'tableBlock', name: 'tableBlock', title: 'Table' },
         { type: 'mapBlock', name: 'mapBlock', title: 'Map' },
+        { type: 'imageRowBlock', name: 'imageRowBlock', title: 'Hàng ảnh (Nhiều ảnh)' },
+        { type: 'htmlBlock', name: 'htmlBlock', title: 'Mã HTML (Embed)' },
       ],
     },
   ],
@@ -73,4 +77,4 @@ export const story = defineType({
   },
 });
 
-export const schemaTypes = [story, textBlock, chartBlock, calloutBlock, tableBlock, mapBlock];
+export const schemaTypes = [story, textBlock, chartBlock, calloutBlock, tableBlock, mapBlock, imageRowBlock, htmlBlock];

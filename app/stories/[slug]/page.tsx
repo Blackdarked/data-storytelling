@@ -6,6 +6,8 @@ import { TextBlock } from '@/components/blocks/TextBlock';
 import { ChartBlock } from '@/components/blocks/ChartBlock';
 import { CalloutBlock } from '@/components/blocks/CalloutBlock';
 import { TableBlock } from '@/components/blocks/TableBlock';
+import { ImageRowBlock } from '@/components/blocks/ImageRowBlock';
+import { HtmlBlock } from '@/components/blocks/HtmlBlock';
 
 export const revalidate = 60;
 
@@ -83,6 +85,17 @@ function renderSection(section: Section) {
           tableData={section.tableData as string}
         />
       );
+    case 'imageRowBlock':
+      return (
+        <ImageRowBlock
+          key={section._key}
+          images={section.images as any[]}
+          columns={section.columns as number}
+          gap={section.gap as 'sm' | 'md' | 'lg'}
+        />
+      );
+    case 'htmlBlock':
+      return <HtmlBlock key={section._key} html={section.html as string} />;
     default:
       return null;
   }
@@ -94,34 +107,34 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
   if (!story) notFound();
 
   const date = story.publishedAt
-    ? new Date(story.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    ? new Date(story.publishedAt).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' })
     : null;
 
   return (
-    <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white text-black min-h-screen">
       {/* Story header */}
-      <header className="mb-12 text-center">
+      <header className="mb-12 text-center pt-24">
         {story.tags && story.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 justify-center mb-4">
+          <div className="flex flex-wrap gap-2 justify-center mb-6">
             {story.tags.map((tag) => (
-              <span key={tag} className="text-xs px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full font-medium">
+              <span key={tag} className="data-label bg-gray-100 px-3 py-1 rounded-full border border-gray-200 text-chlorophyll transition-all hover:bg-gray-200 hover:text-green-700">
                 {tag}
               </span>
             ))}
           </div>
         )}
-        <h1 className="text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-4 leading-tight">
+        <h1 className="text-4xl sm:text-6xl font-black text-black mb-6 leading-tight tracking-tighter uppercase" style={{ fontFamily: 'var(--font-display)' }}>
           {story.title}
         </h1>
         {story.summary && (
-          <p className="text-xl text-gray-600 dark:text-gray-400 mb-4 max-w-2xl mx-auto">{story.summary}</p>
+          <p className="text-xl text-gray-700 mb-4 max-w-2xl mx-auto">{story.summary}</p>
         )}
-        {date && <time className="text-sm text-gray-400 dark:text-gray-500">{date}</time>}
+        {date && <time className="text-sm text-gray-500 font-medium">{date}</time>}
       </header>
 
       {/* Cover image or Background Video */}
       {story.backgroundVideoUrl ? (
-        <div className="mb-12 rounded-3xl overflow-hidden aspect-[16/9] relative shadow-2xl border border-gray-100 dark:border-gray-800">
+        <div className="mb-12 rounded-3xl overflow-hidden aspect-[16/9] relative shadow-2xl border border-gray-200">
           <video autoPlay loop muted playsInline className="w-full h-full object-cover">
             <source src={story.backgroundVideoUrl} type="video/mp4" />
           </video>

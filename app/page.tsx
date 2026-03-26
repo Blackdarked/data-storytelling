@@ -8,6 +8,8 @@ import { StoryNav } from '@/components/ui/StoryNav';
 import { HorizontalJourney } from '@/components/ui/HorizontalJourney';
 import { BreathingCard } from '@/components/ui/BreathingCard';
 import { ParallaxNarrative } from '@/components/ui/ParallaxNarrative';
+import { ImageRowBlock } from '@/components/blocks/ImageRowBlock';
+import { HtmlBlock } from '@/components/blocks/HtmlBlock';
 import { Leaf, Eye, BarChart3, Info } from 'lucide-react';
 
 export const revalidate = 60;
@@ -67,6 +69,17 @@ function renderSection(section: Section) {
           tableData={section.tableData as string}
         />
       );
+    case 'imageRowBlock':
+      return (
+        <ImageRowBlock
+          key={section._key}
+          images={section.images as any[]}
+          columns={section.columns as number}
+          gap={section.gap as 'sm' | 'md' | 'lg'}
+        />
+      );
+    case 'htmlBlock':
+      return <HtmlBlock key={section._key} html={section.html as string} />;
     default:
       return null;
   }
@@ -99,26 +112,26 @@ export default async function HomePage() {
         <div className="relative z-10 text-center px-6">
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold mb-8 glass text-chlorophyll border-chlorophyll/30 glow-chlorophyll uppercase tracking-[0.2em] data-label">
             <Leaf size={14} className="animate-bounce" />
-            Urban Evolution
+            Sự tiến hóa của Đô thị
           </div>
           <h1 className="text-6xl sm:text-8xl font-black mb-8 leading-tight tracking-tighter"
-            style={{ fontFamily: 'var(--font-display)', color: 'white' }}>
-            Cities in <span className="text-chlorophyll">Bloom</span>
+            style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)' }}>
+            Thành phố <span className="text-chlorophyll">Xanh</span>
           </h1>
-          <p className="text-xl sm:text-2xl max-w-2xl mx-auto leading-relaxed text-gray-300 font-light italic">
-            "A living chronicle of how urban greening is reshaping our concrete jungles into breathing ecosystems."
+          <p className="text-xl sm:text-2xl max-w-2xl mx-auto leading-relaxed text-gray-700 font-light italic">
+            "Một câu chuyện về việc phủ xanh đô thị đang tái định hình hệ sinh thái của chúng ta."
           </p>
           <div className="flex justify-center gap-6 mt-12">
             <a href="#stories"
-              className="px-8 py-4 rounded-full text-forest-deep font-bold transition-all hover:scale-105 shadow-2xl bg-chlorophyll hover:bg-white glow-chlorophyll flex items-center gap-2">
+              className="px-8 py-4 rounded-full text-black font-bold transition-all hover:scale-105 shadow-2xl bg-chlorophyll hover:bg-white glow-chlorophyll flex items-center gap-2">
               <Eye size={18} />
-              Explore Narrative
+              Khám phá câu chuyện
             </a>
           </div>
         </div>
-        
+
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
-          <span className="data-label text-[10px]">Scroll to Begin</span>
+          <span className="data-label text-[10px]">Cuộn để bắt đầu</span>
           <div className="w-px h-12 bg-gradient-to-b from-chlorophyll to-transparent" />
         </div>
       </section>
@@ -128,8 +141,8 @@ export default async function HomePage() {
           <div className="story-chapter flex items-center justify-center">
             <BreathingCard className="text-center max-w-lg">
               <div className="text-5xl mb-6">🌱</div>
-              <h2 className="text-2xl font-bold text-gold mb-4">No data stories available yet.</h2>
-              <p className="text-muted">The ecosystem is quiet. Please publish a story in Sanity to populate this chronicle.</p>
+              <h2 className="text-2xl font-bold text-foreground mb-4">Chưa có câu chuyện dữ liệu nào.</h2>
+              <p className="text-muted">Hệ sinh thái đang yên tĩnh. Vui lòng xuất bản một câu chuyện trong Sanity để làm phong phú biên niên sử này.</p>
             </BreathingCard>
           </div>
         ) : (
@@ -147,47 +160,30 @@ export default async function HomePage() {
                         ))}
                       </div>
                     )}
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-foreground">
                       {story.title}
                     </h2>
-                    <div className="prose prose-invert max-w-none mb-8 opacity-80 line-clamp-4">
+                    <div className="prose max-w-none mb-8 opacity-80 line-clamp-4 text-foreground">
                       {story.summary}
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-4 mt-8">
-                       <div className="glass p-4 rounded-2xl flex items-center gap-3">
-                         <BarChart3 className="text-chlorophyll" size={20} />
-                         <div>
-                           <div className="data-label text-[10px]">Data Density</div>
-                           <div className="font-bold">High Precision</div>
-                         </div>
-                       </div>
-                       <div className="glass p-4 rounded-2xl flex items-center gap-3">
-                         <Info className="text-biolume" size={20} />
-                         <div>
-                           <div className="data-label text-[10px]">Source</div>
-                           <div className="font-bold">Verified</div>
-                         </div>
-                       </div>
                     </div>
 
                     <div className="mt-10">
-                       <a href={`/stories/${story.slug.current}`} className="text-chlorophyll font-bold flex items-center gap-2 hover:gap-4 transition-all">
-                         Deep Dive Analysis →
-                       </a>
+                      <a href={`/stories/${story.slug.current}`} className="text-chlorophyll font-bold flex items-center gap-2 hover:gap-4 transition-all">
+                        Phân tích Chuyên sâu →
+                      </a>
                     </div>
                   </div>
 
                   <div className="relative group">
                     <div className="absolute inset-0 bg-chlorophyll/20 blur-3xl rounded-full opacity-0 group-hover:opacity-40 transition-opacity duration-700" />
                     {story.backgroundVideoUrl ? (
-                      <div className="rounded-2xl overflow-hidden aspect-square relative shadow-2xl border border-white/10">
+                      <div className="rounded-2xl overflow-hidden aspect-square relative shadow-2xl border border-black/10">
                         <video autoPlay loop muted playsInline className="w-full h-full object-cover">
                           <source src={story.backgroundVideoUrl} type="video/mp4" />
                         </video>
                       </div>
                     ) : story.coverImage?.asset?.url ? (
-                      <div className="rounded-2xl overflow-hidden aspect-square shadow-2xl border border-white/10">
+                      <div className="rounded-2xl overflow-hidden aspect-square shadow-2xl border border-black/10">
                         <img
                           src={story.coverImage.asset.url}
                           alt={story.title}
@@ -195,7 +191,7 @@ export default async function HomePage() {
                         />
                       </div>
                     ) : (
-                      <div className="rounded-2xl aspect-square bg-white/5 flex items-center justify-center border border-white/10">
+                      <div className="rounded-2xl aspect-square bg-black/5 flex items-center justify-center border border-black/10">
                         <Leaf size={64} className="text-chlorophyll/20" />
                       </div>
                     )}

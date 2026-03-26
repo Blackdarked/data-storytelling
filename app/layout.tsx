@@ -24,11 +24,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen antialiased" style={{ background: 'var(--bg-page)', color: 'var(--text-primary)' }}>
         <Header />
         <main id="main-content">{children}</main>
-        <footer className="mt-24 py-10 border-t" style={{ borderColor: 'var(--green-mint)' }}>
-          <div className="max-w-7xl mx-auto px-4 text-center text-sm" style={{ color: 'var(--text-muted)' }}>
-            🌿 Urban Greening — Data Storytelling Platform
-          </div>
-        </footer>
       </body>
     </html>
   );

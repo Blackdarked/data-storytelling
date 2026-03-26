@@ -61,24 +61,35 @@ export function ChartBlock({ chartType, title, caption, dataSource, xField, yFie
   const chartProps = { data, xField, yField, colorField, title };
 
   return (
-    <figure className="my-8 rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
-      {title && <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{title}</h3>}
+    <figure className="my-8 rounded-xl border border-white/10 bg-white/5 p-6 shadow-2xl transition-all hover:bg-white/10">
+      {title && <h3 className="text-xl font-bold text-white mb-6 border-l-4 border-chlorophyll pl-4">{title}</h3>}
       {loading ? (
-        <div className="flex items-center justify-center h-48 text-gray-400">Loading chart data…</div>
+        <div className="flex items-center justify-center h-48 text-gray-500 animate-pulse">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-8 h-8 border-2 border-chlorophyll border-t-transparent rounded-full animate-spin" />
+            <span className="data-label text-[10px]">Đang tải dữ liệu biểu đồ…</span>
+          </div>
+        </div>
       ) : data.length === 0 ? (
-        <div className="flex items-center justify-center h-48 text-gray-400">No data available</div>
+        <div className="flex items-center justify-center h-48 text-gray-500 border border-dashed border-white/10 rounded-lg">
+          Không có dữ liệu khả dụng
+        </div>
       ) : (
-        (() => {
-          switch (chartType) {
-            case 'bar': return <BarChart {...chartProps} />;
-            case 'line':
-            case 'area': return <LineChart {...chartProps} />;
-            case 'scatter': return <ScatterPlot {...chartProps} />;
-            default: return <div className="text-gray-400">Unsupported chart type: {chartType}</div>;
-          }
-        })()
+        <div className="w-full overflow-hidden">
+          {(() => {
+            switch (chartType) {
+              case 'bar': return <BarChart {...chartProps} />;
+              case 'line':
+              case 'area': return <LineChart {...chartProps} />;
+              case 'scatter': return <ScatterPlot {...chartProps} />;
+              default: return <div className="text-red-400">Loại biểu đồ không được hỗ trợ: {chartType}</div>;
+            }
+          })()}
+        </div>
       )}
-      {caption && <figcaption className="mt-3 text-sm text-gray-500 dark:text-gray-400 text-center italic">{caption}</figcaption>}
+      {caption && <figcaption className="mt-4 text-xs text-gray-400 text-center italic opacity-70">
+        [ {caption} ]
+      </figcaption>}
     </figure>
   );
 }

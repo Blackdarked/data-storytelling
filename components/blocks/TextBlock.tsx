@@ -36,7 +36,7 @@ interface TextBlockProps {
 
 export function TextBlock({ content }: TextBlockProps) {
   return (
-    <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-img:rounded-xl prose-a:text-indigo-600 dark:prose-a:text-indigo-400 prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800">
+    <div className="prose prose-lg max-w-none text-gray-900 prose-headings:font-bold prose-headings:text-black prose-img:rounded-xl prose-a:text-chlorophyll prose-pre:bg-gray-100 border-gray-200">
       <PortableText value={content} components={components} />
     </div>
   );

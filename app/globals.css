@@ -1,27 +1,26 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* ── [UI/UX Pro Max] Chlorophyll Storyteller Palette ── */
+/* ── [UI/UX Pro Max] Minimalist High Contrast Palette ── */
 :root {
-  /* Core Pro Max Palette (Forced Dark Mode by default) */
-  --chlorophyll: #00FF41;
-  --biolume: #00FFFF;
-  --earth-gold: #b08d57;
-  --forest-deep: #0b2118;
-  --forest-medium: #1a4332;
+  /* Core Minimalist Palette */
+  --black-bg: #FFFFFF; /* Swapped for Light Theme */
+  --white-text: #050505; /* Swapped for Light Theme */
+  --chlorophyll: #00A32A; /* Darker green for accessibility on white */
+  --biolume: #007777; /* Darker cyan for accessibility on white */
 
   /* Semantic Mappings */
-  --bg-page: var(--forest-deep);
-  --bg-surface: rgba(255, 255, 255, 0.05);
-  --bg-surface-alt: rgba(255, 255, 255, 0.08);
+  --bg-page: var(--black-bg);
+  --bg-surface: rgba(0, 0, 0, 0.03); /* Light Minimalist Surface */
+  --bg-surface-alt: rgba(0, 0, 0, 0.06);
 
   /* Text */
-  --text-primary: #e8f5ec;
-  --text-secondary: #a8d5b5;
-  --text-muted: #5a8a6a;
+  --text-primary: var(--white-text);
+  --text-secondary: rgba(0, 0, 0, 0.7);
+  --text-muted: rgba(0, 0, 0, 0.5);
 
-  /* Heritage Fonts */
-  --font-display: 'Lora', serif;
+  /* Minimalist Fonts */
+  --font-display: 'Inter', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
@@ -48,10 +47,10 @@ body {
 
 /* Glassmorphism utility */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Breathing Animation */
@@ -99,7 +98,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--forest-deep);
+  background: var(--black-bg);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -110,7 +109,7 @@ body {
 /* Typography Overrides */
 h1, h2, h3 {
   font-family: var(--font-display);
-  color: var(--earth-gold);
+  color: var(--white-text);
 }
 
 .data-label {
