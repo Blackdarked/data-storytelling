@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 function renderSection(section: Section) {
   switch (section._type) {
     case 'textBlock':
-      return <TextBlock key={section._key} content={section.content as unknown[]} />;
+      return <TextBlock key={section._key} content={section.content as any} />;
     case 'chartBlock':
       return (
         <ChartBlock
