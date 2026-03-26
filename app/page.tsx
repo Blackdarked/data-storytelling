@@ -105,10 +105,6 @@ export default async function HomePage() {
               className="px-6 py-3 rounded-full text-white font-semibold transition-all hover:scale-105 shadow-xl bg-green-600/90 hover:bg-green-500 backdrop-blur-sm border border-green-400">
               Read the Stories ↓
             </a>
-            <a href="/studio"
-              className="px-6 py-3 rounded-full font-semibold transition-all shadow-xl bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm border border-white/50">
-              Open Studio
-            </a>
           </div>
         </div>
       </div>
@@ -124,9 +120,7 @@ export default async function HomePage() {
           style={{ borderColor: 'var(--green-mint)', color: 'var(--text-muted)' }}>
           <div className="text-5xl mb-4">🌱</div>
           <p className="text-xl font-semibold mb-2" style={{ color: 'var(--green-forest)' }}>No stories yet.</p>
-          <p className="text-sm">Publish your first story in{' '}
-            <a href="/studio" className="underline" style={{ color: 'var(--green-leaf)' }}>Sanity Studio</a>.
-          </p>
+          <p className="text-sm">Publish your first story to see it appear here.</p>
         </div>
       ) : (
         /* ── Single-page stories layout ── */
