@@ -1,78 +1,122 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* ── Nature Green Palette ── */
+/* ── [UI/UX Pro Max] Chlorophyll Storyteller Palette ── */
 :root {
-  /* Core greens */
-  --green-forest:   #2d6a4f;
-  --green-leaf:     #52b788;
-  --green-sage:     #95d5b2;
-  --green-mint:     #d8f3dc;
-  --green-deep:     #1b4332;
+  /* Core Pro Max Palette (Forced Dark Mode by default) */
+  --chlorophyll: #00FF41;
+  --biolume: #00FFFF;
+  --earth-gold: #b08d57;
+  --forest-deep: #0b2118;
+  --forest-medium: #1a4332;
 
-  /* Backgrounds */
-  --bg-page:        #f7faf5;
-  --bg-surface:     #ffffff;
-  --bg-surface-alt: #f0f7f2;
+  /* Semantic Mappings */
+  --bg-page: var(--forest-deep);
+  --bg-surface: rgba(255, 255, 255, 0.05);
+  --bg-surface-alt: rgba(255, 255, 255, 0.08);
 
   /* Text */
-  --text-primary:   #1b2e22;
-  --text-secondary: #4a6355;
-  --text-muted:     #7a9b87;
+  --text-primary: #e8f5ec;
+  --text-secondary: #a8d5b5;
+  --text-muted: #5a8a6a;
 
-  /* Accents */
-  --accent-earth:   #8b7355;
-  --accent-sky:     #74b9c8;
-  --accent-warm:    #f5f0e8;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-page:        #0d1f13;
-    --bg-surface:     #122018;
-    --bg-surface-alt: #1a2e20;
-    --text-primary:   #e8f5ec;
-    --text-secondary: #a8d5b5;
-    --text-muted:     #5a8a6a;
-  }
+  /* Heritage Fonts */
+  --font-display: 'Lora', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 @theme inline {
-  --color-background:   var(--bg-page);
-  --color-foreground:   var(--text-primary);
-  --font-sans: var(--font-inter, 'Inter', system-ui, sans-serif);
-  --font-serif: var(--font-lora, 'Lora', Georgia, serif);
+  --color-background: var(--bg-page);
+  --color-foreground: var(--text-primary);
+  --color-chlorophyll: var(--chlorophyll);
+  --color-biolume: var(--biolume);
+  --color-gold: var(--earth-gold);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+  --font-mono: var(--font-mono);
 }
 
 body {
   background: var(--bg-page);
   color: var(--text-primary);
-  font-family: var(--font-inter, 'Inter', system-ui, sans-serif);
+  font-family: var(--font-body);
+  overflow-x: hidden; /* Prevent vertical overflow if we do horizontal journey */
 }
 
-html { scroll-behavior: smooth; }
+/* ── [Pro Max] Storytelling Effects ── */
 
-/* Story section divider */
-.story-divider {
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Breathing Animation */
+@keyframes breathing {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.02); opacity: 1; }
+}
+
+.animate-breathing {
+  animation: breathing 4s ease-in-out infinite;
+}
+
+/* Liquid Gold Glow */
+.glow-gold {
+  box-shadow: 0 0 20px rgba(176, 141, 87, 0.2);
+}
+
+.glow-chlorophyll {
+  box-shadow: 0 0 25px rgba(0, 255, 65, 0.15);
+}
+
+/* Horizontal Journey Container */
+.story-journey {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 4rem 0;
-  color: var(--green-sage);
-}
-.story-divider::before,
-.story-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--green-sage), transparent);
+  flex-direction: row;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  height: 100vh;
+  width: 100vw;
 }
 
-/* Prose green overrides */
-.prose a { color: var(--green-forest); }
-.prose blockquote { border-left-color: var(--green-leaf); }
+.story-chapter {
+  flex: 0 0 100vw;
+  height: 100vh;
+  scroll-snap-align: center;
+  position: relative;
+  overflow: hidden;
+}
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-surface-alt); }
-::-webkit-scrollbar-thumb { background: var(--green-sage); border-radius: 3px; }
+/* Custom Scrollbar (Horizontal) */
+::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--forest-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--chlorophyll);
+  border-radius: 2px;
+}
+
+/* Typography Overrides */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  color: var(--earth-gold);
+}
+
+.data-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--biolume);
+}
