@@ -20,14 +20,11 @@ export function Header() {
           </Link>
 
           <nav className="flex items-center gap-4">
-            <a href="#stories" className="text-sm font-medium transition-colors hover:opacity-80" style={{ color: 'var(--text-secondary)' }}>
+            <Link href="/#stories" className="text-sm font-medium transition-colors hover:opacity-80" style={{ color: 'var(--text-secondary)' }}>
               Stories
-            </a>
-            <a href="#about" className="text-sm font-medium transition-colors hover:opacity-80" style={{ color: 'var(--text-secondary)' }}>
+            </Link>
+            <Link href="/#about" className="text-sm font-medium transition-colors hover:opacity-80" style={{ color: 'var(--text-secondary)' }}>
               About
-            </a>
-            <Link href="/studio" className="text-sm font-medium px-4 py-1.5 rounded-full transition-colors text-white" style={{ background: 'var(--green-forest)' }}>
-              Studio
             </Link>
           </nav>
         </div>
