@@ -12,7 +12,8 @@ import { ImageRowBlock } from '@/components/blocks/ImageRowBlock';
 import { HtmlBlock } from '@/components/blocks/HtmlBlock';
 import { Leaf, Eye, BarChart3, Info } from 'lucide-react';
 
-export const revalidate = 60;
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 interface Section {
   _type: string;

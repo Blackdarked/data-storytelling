@@ -9,7 +9,8 @@ import { TableBlock } from '@/components/blocks/TableBlock';
 import { ImageRowBlock } from '@/components/blocks/ImageRowBlock';
 import { HtmlBlock } from '@/components/blocks/HtmlBlock';
 
-export const revalidate = 60;
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 interface Section {
   _type: string;
