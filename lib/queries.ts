@@ -44,7 +44,13 @@ export const allStoriesFullQuery = `
       headers,
       geoJsonUrl,
       valueField,
-      locationField
+      locationField,
+      html,
+      columns,
+      gap,
+      "images": images[] {
+        alt, caption, "asset": asset-> { url }
+      }
     }
   }
 `;
@@ -79,7 +85,13 @@ export const storyBySlugQuery = `
       headers,
       geoJsonUrl,
       valueField,
-      locationField
+      locationField,
+      html,
+      columns,
+      gap,
+      "images": images[] {
+        alt, caption, "asset": asset-> { url }
+      }
     }
   }
 `;
