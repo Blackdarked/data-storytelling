@@ -6,21 +6,30 @@ export const htmlBlock = defineType({
   type: 'object',
   fields: [
     {
-      name: 'html',
-      title: 'Mã HTML / Mã nhúng (Embed Code)',
-      type: 'text',
-      description: 'Dán mã HTML hoặc Embed Script từ Flourish, Datawrapper, v.v.',
-      validation: (Rule) => Rule.required(),
+      name: 'embeds',
+      title: 'Các mã nhúng HTML / Flourish',
+      type: 'array',
+      of: [{ type: 'text' }],
+      description: 'Dán một hoặc nhiều mã nhúng HTML. Có thể dàn thành nhiều cột.',
+      validation: (Rule) => Rule.required().min(1),
+    },
+    {
+      name: 'columns',
+      title: 'Số cột hiển thị',
+      type: 'number',
+      initialValue: 1,
+      options: { list: [1, 2, 3] },
+      description: 'Nếu có nhiều hơn 1 mã nhúng, bạn có thể chọn hiển thị thành 2 hoặc 3 cột.',
     },
   ],
   preview: {
     select: {
-      html: 'html',
+      embeds: 'embeds',
     },
-    prepare({ html }) {
+    prepare({ embeds }) {
       return {
         title: 'Mã HTML (Embed)',
-        subtitle: html ? `${html.substring(0, 40)}...` : 'Chưa có mã HTML',
+        subtitle: embeds && embeds.length > 0 ? `Đã thêm ${embeds.length} mã nhúng` : 'Chưa có mã HTML',
       };
     },
   },

@@ -96,7 +96,7 @@ function renderSection(section: Section) {
         />
       );
     case 'htmlBlock':
-      return <HtmlBlock key={section._key} html={section.html as string} />;
+      return <HtmlBlock key={section._key} embeds={section.embeds as string[]} columns={section.columns as number} />;
     default:
       return null;
   }

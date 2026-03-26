@@ -45,11 +45,11 @@ export const allStoriesFullQuery = `
       geoJsonUrl,
       valueField,
       locationField,
-      html,
+      embeds,
       columns,
       gap,
       "images": images[] {
-        alt, caption, "asset": asset-> { url }
+        alt, caption, asset
       }
     }
   }

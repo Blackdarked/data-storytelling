@@ -27,16 +27,16 @@ export function ImageRowBlock({ images, columns = 2, gap = 'md' }: ImageRowBlock
   return (
     <div className={`my-12 grid grid-cols-1 ${gridCols} ${gapClass}`}>
       {images.map((img, i) => (
-        <figure key={i} className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition-all hover:border-chlorophyll/30 hover:shadow-[0_0_30px_rgba(0,255,65,0.1)]">
+        <figure key={i} className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 transition-all hover:border-chlorophyll/50 hover:shadow-[0_0_20px_rgba(0,163,42,0.15)]">
           <div className="aspect-[4/3] overflow-hidden">
             {img.asset?._ref?.startsWith('image-') ? (
               <img
                 src={urlFor(img).width(800).auto('format').url()}
                 alt={img.alt || ''}
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale hover:grayscale-0"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             ) : (
-              <div className="h-full w-full bg-white/5 flex items-center justify-center text-white/20">
+              <div className="h-full w-full bg-gray-100 flex items-center justify-center text-gray-400">
                 <span className="text-[10px] uppercase tracking-widest">Ảnh mô phỏng</span>
               </div>
             )}
